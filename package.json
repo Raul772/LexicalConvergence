@@ -1,0 +1,15 @@
+{
+  "name": "lexicalconvergence",
+  "version": "1.0.0",
+  "description": "Code that simulates a lexical convergence using vervets monkeys and predators",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raul Victor",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^25.3.1"
+  }
+}
