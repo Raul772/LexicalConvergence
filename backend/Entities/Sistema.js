@@ -49,6 +49,10 @@ class Sistema {
       }
     } while (!convergencia);
 
+    console.info("Resultados Detalhados: ")
+    this.logMacacos();
+    console.info(`${this.cicle * this.systemConfig.nIteracao} Iterações até a convergência.`);
+
     return {
       totalIterations: this.cicle * this.systemConfig.nIteracao,
       cicleDataTable: this.cicleData,
