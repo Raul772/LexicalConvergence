@@ -1,5 +1,12 @@
+let configParams;
+
+async function updateAnimConfigs() {
+  configParams = await backend.configs();
+  return true;
+}
+
 async function loadAnimation() {
-  let configParams = await backend.configs();
+  await updateAnimConfigs();
 
   let canvas, context;
 
@@ -12,7 +19,7 @@ async function loadAnimation() {
   let predadorIcon = new Image();
   predadorIcon.src = "./assets/Predador.png";
 
-  if(!configParams.animation){
+  if (!configParams.animation) {
     return false;
   }
 
@@ -21,6 +28,7 @@ async function loadAnimation() {
   canvas.height = configParams.envMaxY * 10;
 
   context = canvas.getContext("2d");
+
 
   window.backend.onFrameUpdate((event, frame) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -42,8 +50,8 @@ async function loadAnimation() {
 
     event.sender.send("updatedFrame", true);
   });
-};
-
+}
 
 loadAnimation();
+
 

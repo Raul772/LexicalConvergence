@@ -1,11 +1,10 @@
-const Config = require("./Config");
 
 class Table {
 
-  constructor() {
+  constructor(systemConfig) {
     this.actualtable = [];
     
-    for (let i = 0; i < Config.simbolos; i++) {
+    for (let i = 0; i < systemConfig.simbolos; i++) {
       this.actualtable[i] = [];
     }
   }

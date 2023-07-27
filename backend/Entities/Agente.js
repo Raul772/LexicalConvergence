@@ -1,14 +1,17 @@
 const Position = require("./Position");
-const Config = require("./Config");
 
 class Agente {
-  constructor(environment) {
+  static systemConfig;
+
+  constructor(environment, systemConfig) {
+    Agente.systemConfig = systemConfig;
+
     // Definição randomica de coordenadas para spawn do agente
     let x, y;
 
     do {
-      x = Math.floor(Math.random() * Config.envMaxX);
-      y = Math.floor(Math.random() * Config.envMaxY);
+      x = Math.floor(Math.random() * Agente.systemConfig.envMaxX);
+      y = Math.floor(Math.random() * Agente.systemConfig.envMaxY);
     } while (environment.mapMatrix[x][y]);
 
     // Criação de um objeto representando a posição
@@ -19,11 +22,13 @@ class Agente {
   }
 
   mover(environment) {
-    let x, y, nextPosition = new Position();
+    let x,
+      y,
+      nextPosition = new Position();
     do {
       //Definição randomica de novas posições para o agente
-      x = Math.floor(Math.random() * Config.envMaxX);
-      y = Math.floor(Math.random() * Config.envMaxY);
+      x = Math.floor(Math.random() * Agente.systemConfig.envMaxX);
+      y = Math.floor(Math.random() * Agente.systemConfig.envMaxY);
       // criação do objeto posição que representa a próxima posição do agente
       nextPosition.x = x;
       nextPosition.y = y;

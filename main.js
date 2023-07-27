@@ -19,14 +19,15 @@ function createWindow() {
 
 app.whenReady().then(() => {
   ipcMain.handle("simular", () => {
-    new Sistema().inicializar(BrowserWindow.getFocusedWindow());
+    return new Sistema().inicializar(BrowserWindow.getFocusedWindow());
   });
   ipcMain.handle("configs", () =>
     JSON.parse(fs.readFileSync("./backend/settings.json"))
   );
-  ipcMain.handle("updateConfigs", (event, configs) =>
-    fs.writeFileSync("./backend/settings.json", configs)
-  );
+  ipcMain.handle("updateConfigs", (event, configs) => {
+    global.systemConfig = configs;
+    fs.writeFileSync("./backend/settings.json", JSON.stringify(configs));
+  });
 
   createWindow();
 

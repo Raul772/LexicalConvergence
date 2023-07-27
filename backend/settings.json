@@ -1,1 +1,1 @@
-{"simbolos":"20","raioAudicao":"6","raioVisao":"12","nIteracao":"30000","envMaxX":"50","envMaxY":"50","nMacacos":"10","nPredadores":"15","saveCicleData":true,"animation":true}
+{"simbolos":10,"raioAudicao":6,"raioVisao":12,"nIteracao":100,"envMaxX":50,"envMaxY":50,"nMacacos":3,"nPredadores":4,"saveCicleData":false,"animation":true}

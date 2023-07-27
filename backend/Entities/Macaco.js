@@ -1,23 +1,25 @@
 const Agente = require("./Agente");
 const Table = require("./Table");
 const Predador = require("./Predador");
-const Config = require("./Config");
+
 
 class Macaco extends Agente {
   static totalMacacos = 0;
   static taxaAprendizado = 0.0005;
+  static systemConfig;
 
-  constructor(environment) {
-    super(environment);
+  constructor(environment, systemConfig) {
+    super(environment, systemConfig);
+    Macaco.systemConfig = systemConfig;
     Macaco.totalMacacos += 1;
     this.nome = "M" + Macaco.totalMacacos;
-    this.table = new Table();
+    this.table = new Table(systemConfig);
     this.populateTable();
   }
 
   populateTable() {
-    for (let i = 0; i < Config.simbolos; i++) {
-      for (let j = 0; j < Config.nPredadores; j++) {
+    for (let i = 0; i < Macaco.systemConfig.simbolos; i++) {
+      for (let j = 0; j < Macaco.systemConfig.nPredadores; j++) {
         this.table.actualtable[i][j] = (Math.random() * 90) / 100;
       }
     }
@@ -27,23 +29,23 @@ class Macaco extends Agente {
     let iCheck;
     let jCheck;
 
-    let i = Config.envMaxX - Config.raioVisao;
-    let j = Config.envMaxY - Config.raioVisao;
+    let i = Macaco.systemConfig.envMaxX - Macaco.systemConfig.raioVisao;
+    let j = Macaco.systemConfig.envMaxY - Macaco.systemConfig.raioVisao;
 
-    for (i; i < Config.envMaxX + Config.raioVisao; i++) {
-      if (i >= Config.envMaxX) {
-        iCheck = i - Config.envMaxX;
+    for (i; i < Macaco.systemConfig.envMaxX + Macaco.systemConfig.raioVisao; i++) {
+      if (i >= Macaco.systemConfig.envMaxX) {
+        iCheck = i - Macaco.systemConfig.envMaxX;
       } else if (i < 0) {
-        iCheck = i + Config.envMaxX;
+        iCheck = i + Macaco.systemConfig.envMaxX;
       } else {
         iCheck = i;
       }
 
-      for (j; j < Config.envMaxY + Config.raioVisao; j++) {
-        if (j >= Config.envMaxY) {
-          jCheck = j - Config.envMaxY;
+      for (j; j < Macaco.systemConfig.envMaxY + Macaco.systemConfig.raioVisao; j++) {
+        if (j >= Macaco.systemConfig.envMaxY) {
+          jCheck = j - Macaco.systemConfig.envMaxY;
         } else if (j < 0) {
-          jCheck = j + Config.envMaxY;
+          jCheck = j + Macaco.systemConfig.envMaxY;
         } else {
           jCheck = j;
         }
@@ -67,14 +69,14 @@ class Macaco extends Agente {
     let indexPredador = 0;
 
     // Identificando o predador avistado no array de predadores do Ambiente
-    for (let i = 0; i < Config.nPredadores; i++) {
+    for (let i = 0; i < Macaco.systemConfig.nPredadores; i++) {
       if (environment.predadores[i] == predador) {
         indexPredador = i;
       }
     }
 
     // Procurando qual simbolo(para este macaco) tem a maior probalidade para representar esse predador
-    for (let i = 0; i < Config.simbolos; i++) {
+    for (let i = 0; i < Macaco.systemConfig.simbolos; i++) {
       if (this.table.actualtable[i][indexPredador] >= maior) {
         maior = this.table.actualtable[i][indexPredador];
         indexSymbol = i;
@@ -85,29 +87,29 @@ class Macaco extends Agente {
     let jCheck;
 
     for (
-      let i = this.position.x - Config.raioAudicao;
-      i <= this.position.x + Config.raioAudicao;
+      let i = this.position.x - Macaco.systemConfig.raioAudicao;
+      i <= this.position.x + Macaco.systemConfig.raioAudicao;
       i++
     ) {
       // correção das coordenadas para a verificação caso estejam out of boundaries
-      if (i >= Config.envMaxX) {
-        iCheck = i - Config.envMaxX;
+      if (i >= Macaco.systemConfig.envMaxX) {
+        iCheck = i - Macaco.systemConfig.envMaxX;
       } else if (i < 0) {
-        iCheck = i + Config.envMaxX;
+        iCheck = i + Macaco.systemConfig.envMaxX;
       } else {
         iCheck = i;
       }
 
       for (
-        let j = this.position.y - Config.raioAudicao;
-        j <= this.position.y + Config.raioAudicao;
+        let j = this.position.y - Macaco.systemConfig.raioAudicao;
+        j <= this.position.y + Macaco.systemConfig.raioAudicao;
         j++
       ) {
         // correção das coordenadas para a verificação caso estejam out of boundaries
-        if (j >= Config.envMaxY) {
-          jCheck = j - Config.envMaxY;
+        if (j >= Macaco.systemConfig.envMaxY) {
+          jCheck = j - Macaco.systemConfig.envMaxY;
         } else if (j < 0) {
-          jCheck = j + Config.envMaxY;
+          jCheck = j + Macaco.systemConfig.envMaxY;
         } else {
           jCheck = j;
         }
@@ -149,9 +151,9 @@ class Macaco extends Agente {
 
     console.log("");
 
-    for (let i = 0; i < Config.simbolos; i++) {
+    for (let i = 0; i < Macaco.systemConfig.simbolos; i++) {
       process.stdout.write("S" + (i + 1) + "\t");
-      for (let j = 0; j < Config.nPredadores; j++) {
+      for (let j = 0; j < Macaco.systemConfig.nPredadores; j++) {
         process.stdout.write(
           `${Number(this.table.actualtable[i][j]).toFixed(2)}\t`
         );
@@ -180,9 +182,9 @@ class Macaco extends Agente {
 
     // Pegando um vetor de maior simbolo por predador (para este macaco)
     let mSimbAux = [];
-    for (let predador = 0; predador < Config.nPredadores; predador++) {
+    for (let predador = 0; predador < Macaco.systemConfig.nPredadores; predador++) {
       let probAux = 0;
-      for (let simbolo = 0; simbolo < Config.simbolos; simbolo++) {
+      for (let simbolo = 0; simbolo < Macaco.systemConfig.simbolos; simbolo++) {
         if (this.table.actualtable[simbolo][predador] > probAux) {
           mSimbAux[predador] = simbolo;
           probAux = this.table.actualtable[simbolo][predador];

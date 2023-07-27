@@ -4,8 +4,8 @@ class Predador extends Agente{
 
   static totalPredadores = 0;
 
-  constructor(environment){
-    super(environment);
+  constructor(environment, systemConfig){
+    super(environment, systemConfig);
     this.index = Predador.totalPredadores;
     Predador.totalPredadores += 1;
     this.nome = ("P" + Predador.totalPredadores);

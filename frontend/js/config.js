@@ -10,9 +10,10 @@ const animation_field = document.getElementById("animation");
 const saveCicleData_field = document.getElementById("saveCicleData");
 
 const form = document.querySelector("form");
+ 
 
 async function updateFields() {
-  window.configParams = await backend.configs();
+  globalThis.configParams = await backend.configs();
 
   simbolos_field.value = configParams.simbolos;
   audicao_field.value = configParams.raioAudicao;
@@ -40,8 +41,8 @@ form.addEventListener("submit", async (e) => {
     envMaxY: Number(envMaxY_field.value),
     nMacacos: Number(macacos_field.value),
     nPredadores: Number(predadores_field.value),
-    saveCicleData: Number(saveCicleData_field.checked),
-    animation: Number(animation.checked),
+    saveCicleData: saveCicleData_field.checked,
+    animation: animation_field.checked,
   };
 
   await backend.updateConfigs(aux);

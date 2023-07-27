@@ -1,26 +1,19 @@
-const config = require("./Config");
 
 class Environment {
+  
+  static systemConfig;
 
-  constructor() {
-
-    this.simbolos = config.simbolos;
-    this.raioAudicao = config.raioAudicao;
-    this.raioVisao = config.raioVisao;
-    this.envMaxX = config.envMaxX;
-    this.envMaxY = config.envMaxY;
-    this.nMacacos = config.nMacacos;
-    this.nPredadores = config.nPredadores;
+  constructor(systemConfig) {
 
     this.mapMatrix = [];
     this.macacos = [];
     this.predadores = [];
+    Environment.systemConfig = systemConfig;
 
-
-    for (let i = 0; i < config.envMaxX; i++) {
+    for (let i = 0; i < Environment.systemConfig.envMaxX; i++) {
       this.mapMatrix[i] = [];
-      this.mapMatrix[i].length = config.envMaxY;
-      for (let j = 0; j < config.envMaxY; j++) {
+      this.mapMatrix[i].length = Environment.systemConfig.envMaxY;
+      for (let j = 0; j < Environment.systemConfig.envMaxY; j++) {
         this.mapMatrix[i][j] = null;
       }
     }
